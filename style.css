@@ -1,0 +1,524 @@
+/* import goes here */
+
+/* font-family: 'Raleway', sans-serif; font-weight: Regular 400 , Regular 400 italic, Medium 500, Medium 500 italic, 600 italic
+font-family: 'Playfair Display', serif; font-weight: Regular 400, Regular 400 italic, Medium 500, Medium 500 italic, Semi-bold 600, Bold 700,Extra-bold 800, Black 900 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500&family=Raleway:ital,wght@0,400;0,500;1,400;1,500;1,600;1,700&display=swap');
+
+/* color variables */
+
+:root {
+    --pageBackground: rgba(254, 204, 192, .75);
+    --headerColor: rgb(180, 11, 17);
+    --addBookColor: rgba(99, 205, 218, .75);
+}
+
+/* general page style here */
+
+html {
+    font-size: 100%;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    max-height: 100%;
+    background-color: var(--pageBackground);
+}
+
+body {
+    width: 100%;
+    text-align: center;
+}
+
+main {
+    width: 90%;
+}
+
+html,
+body,
+header,
+main, 
+section,
+footer {
+    margin: 0 auto;
+}
+
+header,
+section,
+footer {
+    width: 95%;
+}
+
+.userScore h3 {
+    margin-bottom: .5rem;
+}
+
+.bookButtonDiv {
+    margin-top: 1.25rem;
+}
+
+.heart:before {
+    content: '🖤';
+}
+
+.unread:before {
+    content: "🙅";
+}
+
+.read:before {
+    content: "👍";
+}
+
+.norating:before {
+    content: "😶";
+}
+
+button {
+    font-size: 1.15rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 7px;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+button:focus {
+    outline: 0;
+    box-shadow: none!important;
+}
+
+/* typography here */
+
+h1,
+h2, 
+h3,
+h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--headerColor);
+}
+
+h1 {
+    font-weight: 900;
+    font-size: 3.2rem;
+}
+
+h2 {
+    font-size: 1.32rem;
+    font-weight: 700;
+    font-style: italic;
+}
+
+h3,
+h4 {
+    font-size: .9rem;
+    font-weight: 600;
+}
+
+p,
+span,
+button,
+form {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+}
+
+p, 
+form {
+    font-style: italic;
+}
+
+p {
+    font-size: 1rem;
+    margin-top: .1rem;
+    margin-bottom: .1rem;
+}
+
+/* baner rules */
+
+#banner {
+    background-image: url(images/dif-lib.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+/* grid rules */
+
+body,
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+
+}
+
+body {
+    grid-template-rows: 2fr 1fr 1fr auto .25fr;
+    gap: .5rem;
+}
+
+main {
+    place-items: center;
+    gap: .5rem;
+}
+
+/* flex rules */
+
+header,
+section,
+.cardContent {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-evenly;
+}
+
+.bookButtons {
+    display: flex;
+    justify-content: center;
+}
+
+.modal {
+    display: flex;
+}
+
+.formContainer {
+    flex: 3 0;
+}
+
+fieldset {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.readButtonContainer {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+/* card rules here */
+
+.card {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+}
+
+.card::after {
+    content: "";
+    width: 100%;
+    height: 100%;
+    position: absolute; 
+	top: 0; 
+	left: 0;
+	z-index: 1;
+    background-color: #E5E5F7;
+    opacity: .6;
+    background-size: 26px 26px;
+    background-image:  repeating-linear-gradient(0deg, #26aaaf, #26aaaf 1.3px, #E5E5F7 1.3px, #E5E5F7);
+    border-radius: 9px;
+}
+
+.cardContent {
+    position: relative;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    padding: .5rem;
+}
+
+.bookButtons {
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+}
+
+.edit,
+.delete {
+    margin: 0 1rem;
+    width: 3rem;
+}
+
+#addBook {
+    width: 5rem;
+    font-size: 1.5rem;
+}
+
+#addBook,
+button[type="submit"] {
+    background-color: var(--addBookColor);
+}
+
+.edit {
+    background-color: rgba(241, 144, 102,1.0);
+}
+
+.delete,
+.close {
+    background-color: rgba(230, 103, 103,1.0);
+}
+
+/* modal rules here */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20rem;
+    max-width: 100%;
+    height: 20rem;
+    max-height: 100%;
+    z-index: 1010;
+    border-radius: 8px;
+    opacity: 1;
+    overflow-y: scroll;
+    background-color: #546de5;
+    padding: 1rem;
+  }
+
+.overlay {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(100, 100, 100, 0.4);
+}
+
+.hidden {
+    display: none;
+}
+
+/* form rules go here */
+
+fieldset {
+    border: none;
+}
+
+input {
+    border-radius: 5px;
+    border: none;
+    width: 90%;
+}
+
+.readButtonContainer {
+    margin: .5rem 0;
+}
+
+input[type='checkbox'],
+select {
+    height: 1.5rem;
+    width: 1.5rem;
+    border-radius: 6px;
+    border: none;
+    outline: none !important;
+}
+
+label {
+    margin: .25rem;
+}
+
+.close {
+    width: 2rem;
+}
+
+/* media queries go here */
+
+/* mobile landscape  */
+@media screen and (min-width: 450px) and (min-height: 300px) and (orientation: landscape) {
+
+    html {
+        font-size: 105%;
+    }
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    h2 {
+        font-size: 2rem;
+    }
+
+    h3,
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    p {
+        font-size: 1.1rem;
+    }
+
+    #addBook {
+        font-size: 2rem;
+    }
+
+    .edit,
+    .delete {
+        font-size: 1.5rem;
+    }
+}
+
+/* large mobile portrait */
+@media screen and (min-width: 414px) and (min-height: 600px) and (orientation: portrait) {
+    html {
+        font-size: 110%;
+    }
+}
+
+/* large mobile landscape  */
+@media screen and (min-width: 700px) and (min-height: 414px) and (orientation: landscape) {
+
+    main {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: max-content;
+        grid-auto-flow: row;
+        text-align: center;
+    }
+
+    section {
+        text-align: center;
+        flex-flow: column nowrap;
+        align-items: center;
+    }
+
+    #addBook {
+        font-size: .8rem;
+        width: 5rem;
+    }
+    .userScore h3 {
+        margin: 0;
+    }
+
+    #addBook {
+        font-size: 3rem;
+    }
+    
+    footer {
+        text-align: center;
+    }
+}
+
+/* larger mobile portrait  */
+@media screen and (min-width: 600px) and (min-height: 600px) {
+
+    h1 {
+        font-size: 4rem;
+    }
+
+    h3,
+    h4 {
+        font-size: 1rem;
+    }
+
+    main {
+        grid-template-columns: 1fr 1fr;
+        grid-auto-rows: max-content;
+        grid-auto-flow: row;
+    }
+}
+
+@media screen and (min-width: 1024px) and (min-height: 768px) {
+    header {
+        flex-flow:column nowrap;
+        justify-content: space-evenly;
+        align-content: baseline;
+    }
+}
+
+/* tablet landscape mode  */
+@media screen and (min-width: 1024px) and (min-height: 768px) {
+
+    html {
+        font-size: 110%;
+    }
+
+    body {
+        text-align: start;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr 4fr .25fr;
+        grid-template-areas: 
+            "banner banner"
+            "header section"
+            "main main"
+            "footer footer";
+    }
+
+    header {
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        align-content: center;
+    }
+
+    main {
+        grid-area: main;
+    }
+    section {
+        grid-area: section;
+        flex-flow: row wrap;
+        align-content: center;
+        align-items: center;
+    }
+
+    #banner {
+        grid-area: banner;
+    }
+
+    h3,
+    h4 {
+        font-size: 1.25rem;
+    }
+
+    #addBook {
+        font-size: 1.35rem;
+        width: 6rem;
+        height: 3rem;
+    }
+
+    footer {
+        grid-area: footer;
+        text-align: center;
+    }
+
+    legend {
+        text-align: center;
+    }
+
+    button[type="submit"] {
+        width: 10rem;
+    }
+}
+
+/* desktop portrait mode  */
+@media screen and (min-width: 1080px) {
+
+    html {
+        font-size: 115%;
+    }
+
+    main {
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-auto-rows: max-content;
+        grid-auto-flow: row;
+        margin-top: 2rem;
+    }
+
+    #addBook {
+        width: 6rem;
+        font-size: 2rem;
+    }
+
+    .cardContent {
+        justify-content: space-between;
+    }
+}
+
+/* desktop and hugeeeeeeeeeeee boizzzzzzz landscape*/
+@media (min-width: 1500px) {
+   
+    html {
+        font-size: 125%;
+    }
+}

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/modern-css-reset/dist/reset.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/mono-icons@1.2.4/iconfont/icons.css">
+    <link rel="stylesheet" href="style.css">
+    <title>librarycamp</title>
+</head>
+<body>
+    <div id="banner"></div>
+    <header>
+        <h1>Librarycamp</h1>
+        <h2>Show the world how literate you are</h2>
+    </header>
+    <section>
+        <div class="userScore">
+            <h3>You've read 5 books of 134,021,533 books in existence</h3>
+            <h4>Your book score: %0.000000001</h4>
+        </div>
+        <div class="bookButtonDiv">
+            <button id="addBook"><i class="mi-add"></i></button>
+        </div>
+    </section>
+    <main>
+        <!-- to be generated dynamically by user -->
+    </main>
+
+    <footer>
+        <h3>Made with <span class="heart"></span> by Alec Moschetti</h3>
+    </footer>
+
+    <div class="overlay hidden">
+        <div class="modal">
+            <div>
+                <button class="close">X</button>
+            </div>
+            <div class="formContainer">
+                <form>
+                    <fieldset>
+                        <legend>Book details</legend>
+                            <label for="title">Title <abbr title="required" aria-label="required">*</abbr></label>
+                            <input type="text" name="title" id="title">
+                            <label for="author">Author <abbr title="required" aria-label="required">*</abbr></label>
+                            <input type="text" name="author" id="author">
+                            <div class="readButtonContainer">
+                                <label for="title">Read</label>
+                                <input type="checkbox" name="readstatus" id="readstatus">
+                                <label for="rating">Rating</label>
+                                <select name="rating" id="rating" readonly>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>  
+                            </div>
+                            <div>
+                                <button type="submit">Submit</button>
+                            </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
