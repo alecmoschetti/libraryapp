@@ -35,6 +35,7 @@ function addBookToLibrary() {
     let book = new Book(obj.title, obj.author, obj.readstatus, obj.rating); //using object destructuring to pull our form data object property values to pass as arguments to our constructor function
     myLibrary.push(book); //pushing our newly created book object into the myLibrary array
     }
+    setStorage(myLibrary);
 }
 
 function displayBooks(arr) {
@@ -82,6 +83,21 @@ function makeCards(title, author, read, rating) {
     main.appendChild(card); //appending our child to the DOM inside the main element
 }
 
+function setStorage(arr) {
+    localStorage.setItem("myLibrary", JSON.stringify(arr));
+} 
+
+function getStorage() {
+    if (!localStorage.myLibrary) {
+        displayBooks(myLibrary);
+    } else {
+        let objects = localStorage.getItem("myLibrary");
+        objects = JSON.parse(objects);
+        let flattened = objects.reduce((acc, val) => acc.concat(val), []);
+        flattened.forEach(object => myLibrary.push(new Book(object.title, object.author, object.read, object.rating)));
+        displayBooks(myLibrary);
+    }
+}
 //event handing goes here
 
 //modal window event listeners
@@ -96,29 +112,42 @@ modalClose.addEventListener("click", () => {
 submit.addEventListener('click', (e) => {
     e.preventDefault(); //making sure the form doesn't try to post input values anywhere so we can grab them and manipulate them ourselves
     addBookToLibrary(); //see function definition above -- adds book to our myLibrary array
-    form.reset(); //built in function to clear form elements
+    form.reset(); //built in js function to clear form elements
     displayBooks(myLibrary); //see function definition above -- passing our myLibrary array as an arg to the function
-
-    const deleteButton = document.querySelectorAll(".delete"); //since this doesn't exist until affter the previous function call, I declare this variable now instead of global scope
-    deleteButton.forEach(button => button.addEventListener("click", (e) => { //adds a click event for each delete button that runs the below arrow function
-        let target; //ternary operator below incase user clicks on button vs. i element in button; essentially makes sure we're gonna grab the right parentnode
-        (e.target.classList.contains("edit")) ? target = e.target.parentNode.parentNode.parentNode : target = e.target.parentNode.parentNode.parentNode.parentNode; //grabbing the final ancestor the card element
-        const attr = target.dataset.book; //grabbing the card that was clicked custom book dataset attribute
-        let index; //initializing variable to use inside the forEach loop below
-        myLibrary.forEach(book => {
-            if (book.title == attr) { //when cycling through the array, if the book object title property equals our target card attribute
-                index = myLibrary.indexOf(book); //set the index variable to equal the indexOf that object in our array
-                if (index > -1) myLibrary.splice(index, 1); //remove our book from the array
-                main.removeChild(target); //remove our card from the DOM
-            }});
-    }));
-
-    const editButton = document.querySelectorAll(".edit");
-    editButton.forEach(button => button.addEventListener("click", (e) => {
-        let target;
-        (e.target.classList.contains("edit")) ? target = e.target.parentNode.parentNode.parentNode : target = e.target.parentNode.parentNode.parentNode.parentNode;
-    }));
 });
+
+main.addEventListener("focusin", (e) => {
+        let deleteButton = document.querySelectorAll(".delete"); //since this doesn't exist until affter the previous function call, I declare this variable now instead of global scope
+        deleteButton.forEach(button => button.addEventListener("click", (e) => { //adds a click event for each delete button that runs the below arrow function
+            let target; //ternary operator below incase user clicks on button vs. i element in button; essentially makes sure we're gonna grab the right parentnode
+            (e.target.classList.contains("delete")) ? target = e.target.parentNode.parentNode.parentNode : target = e.target.parentNode.parentNode.parentNode.parentNode; //grabbing the final ancestor the card element
+            let attr = target.dataset.book; //grabbing the card that was clicked custom book dataset attribute
+            let index; //initializing variable to use inside the forEach loop below
+            myLibrary.forEach(book => {
+                if (book.title == attr) { //when cycling through the array, if the book object title property equals our target card attribute
+                    index = myLibrary.indexOf(book); //set the index variable to equal the indexOf that object in our array
+                    if (index > -1) myLibrary.splice(index, 1); //remove our book from the array
+                    main.removeChild(target); //remove our card from the DOM
+                    setStorage(myLibrary);
+                }});
+        }));
+        let editButton = document.querySelectorAll(".edit");
+        editButton.forEach(button => button.addEventListener("click", (e) => {
+            let target;
+            (e.target.classList.contains("edit")) ? target = e.target.parentNode.parentNode.parentNode : target = e.target.parentNode.parentNode.parentNode.parentNode;
+            let attr = target.dataset.book; //grabbing the card that was clicked custom book dataset attribute
+            myLibrary.forEach(book => {
+                if (book.title == attr) { //when cycling through the array, if the book object title property equals our target card attribute
+                    (book.read === "on") ? book.changeRead(true) : book.changeRead(false);
+                    displayBooks(myLibrary);
+                    setStorage(myLibrary);
+                }});
+        }));
+});
+
+//any other scripts
+
+getStorage();
 
 
 
