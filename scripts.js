@@ -9,6 +9,7 @@ const form = document.querySelector("form");
 const submit = document.querySelector(`button[type="submit"]`);
 const titleInput = document.querySelector("#title");
 const authorInput = document.querySelector("#author");
+const userScoreDiv = document.querySelector(".userScore");
 
 
 //object declarations, classes, and constructor functions go here
@@ -36,6 +37,7 @@ function addBookToLibrary() {
     myLibrary.push(book); //pushing our newly created book object into the myLibrary array
     }
     setStorage(myLibrary);
+    getScore(myLibrary);
 }
 
 function displayBooks(arr) {
@@ -96,7 +98,25 @@ function getStorage() {
         let flattened = objects.reduce((acc, val) => acc.concat(val), []);
         flattened.forEach(object => myLibrary.push(new Book(object.title, object.author, object.read, object.rating)));
         displayBooks(myLibrary);
+        getScore(myLibrary);
     }
+}
+
+function getScore(arr) {
+    let filtered = arr.filter(book => (book.read === "on"));
+    let booksRead = filtered.length;
+    const averageLife = 72.63;
+    const averageBooksPerYear = 12;
+    const averageReaderReads = (averageLife * averageBooksPerYear);
+    const averageScore = (averageReaderReads/134021533) * 100;
+    let userScore = (booksRead/134021533) * 100;
+    let delta = averageReaderReads - booksRead;
+    let moreOrLess = (delta > 0) ? `${delta} less` : `${delta} more`;
+    userScoreDiv.innerHTML = `
+        <h3>You've read ${booksRead} books of 134,021,533 books in existence</h3>
+        <h4>Your book score: ${userScore}%</h4>
+        <h4>Average person book score: ${averageScore}%</h4>
+        <h4>You've read ${moreOrLess} books than the average reader in their lifetime</h4>`;
 }
 //event handing goes here
 
@@ -129,6 +149,7 @@ main.addEventListener("focusin", (e) => {
                     if (index > -1) myLibrary.splice(index, 1); //remove our book from the array
                     main.removeChild(target); //remove our card from the DOM
                     setStorage(myLibrary);
+                    getScore(myLibrary);
                 }});
         }));
         let editButton = document.querySelectorAll(".edit");
@@ -141,6 +162,7 @@ main.addEventListener("focusin", (e) => {
                     (book.read === "on") ? book.changeRead(true) : book.changeRead(false);
                     displayBooks(myLibrary);
                     setStorage(myLibrary);
+                    getScore(myLibrary);
                 }});
         }));
 });
